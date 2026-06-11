@@ -1,0 +1,26 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0e0c;
+  --surface: #1a1814;
+  --ink: #f0ece4;
+  --muted: #6b6560;
+  --accent: #c8a96e;
+  --accent-dim: #7a6440;
+  --line: #2a2620;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
