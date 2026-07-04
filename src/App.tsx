@@ -6,7 +6,6 @@ import MarketingLayout from './components/layout/MarketingLayout'
 import PortalLayout from './components/layout/PortalLayout'
 import Overlays from './components/overlays/Overlays'
 import Toast from './components/layout/Toast'
-import ProtoStrip from './components/layout/ProtoStrip'
 
 import HomePage from './pages/marketing/HomePage'
 import ServicesPage from './pages/marketing/ServicesPage'
@@ -59,7 +58,6 @@ export default function App() {
         {/* global chrome that sits above any route */}
         <Overlays />
         <Toast />
-        <ProtoStrip />
       </AppProvider>
     </ToastProvider>
   )

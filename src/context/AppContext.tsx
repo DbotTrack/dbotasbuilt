@@ -74,7 +74,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     else openAuth('login', { pendingBooking: true })
   }, [signedIn, openBooking, openAuth])
 
-  const logIn = useCallback(() => openAuth('login'), [openAuth])
+  // Log in lives in the separate client app — open it in a new tab.
+  const logIn = useCallback(() => {
+    window.open('https://app.dbotasbuilt.com', '_blank', 'noopener,noreferrer')
+  }, [])
 
   const completeSignin = useCallback(() => {
     setSignedIn(true)
