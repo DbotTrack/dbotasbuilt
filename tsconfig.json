@@ -18,11 +18,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": ".",
+    // No "baseUrl": it is deprecated in TS 6 and removed in 7. Since TS 4.1,
+    // "paths" resolves relative to this file, which is what we want anyway.
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "ignoreDeprecations": "6.0"
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
