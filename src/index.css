@@ -382,7 +382,7 @@
   .app-banner-copy { @apply flex-1 min-w-[220px]; }
   .app-banner-copy h2 { @apply text-white font-display font-semibold tracking-[-0.02em]; font-size: clamp(21px, 2.6vw, 29px); }
   .app-banner-copy p { @apply text-white/70 text-[15px] mt-1.5; }
-  .store-btn { @apply inline-flex items-center gap-2.5 bg-ink text-white rounded-xl cursor-pointer transition-colors; padding: 9px 16px; }
+  .store-btn { @apply inline-flex items-center gap-2.5 bg-ink text-white cursor-pointer transition-colors; border-radius: 12px; padding: 9px 16px; }
   .store-btn:hover { background: #000; }
   .store-btn svg { @apply w-[22px] h-[22px]; fill: #fff; }
   .store-btn span { @apply flex flex-col text-left text-[15px] font-semibold; line-height: 1.12; }
@@ -528,7 +528,7 @@
   .auth-switch { @apply text-center text-[13.5px] text-ink-3 mt-5; }
   .auth-switch a { @apply text-orange-deep cursor-pointer font-medium; }
   .otp-row { @apply flex gap-2.5 justify-center mb-[22px]; }
-  .otp-box { @apply w-12 h-14 rounded-xl text-center text-[22px] font-semibold text-ink; border: 1px solid theme('colors.grey.1'); }
+  .otp-box { @apply w-12 h-14 text-center text-[22px] font-semibold text-ink; border-radius: 12px; border: 1px solid theme('colors.grey.1'); }
   .otp-box:focus { outline: none; border-color: theme('colors.orange.DEFAULT'); box-shadow: 0 0 0 3px rgba(255,143,31,.16); }
 
   /* ---- estimator (scoped .est) ---- */
@@ -669,7 +669,7 @@
   .bk-cal-head { @apply flex items-center justify-between mb-3; }
   .bk-cal-head .mn { @apply font-semibold text-[15px]; }
   .bk-cal-head .nv { @apply flex gap-1.5; }
-  .bk-cal-head .nv button { @apply w-[30px] h-[30px] rounded-lg bg-white cursor-pointer text-ink-2; border: 1px solid theme('colors.grey.1'); }
+  .bk-cal-head .nv button { @apply w-[30px] h-[30px] bg-white cursor-pointer text-ink-2; border-radius: 8px; border: 1px solid theme('colors.grey.1'); }
   .cal-grid { @apply grid gap-[5px]; grid-template-columns: repeat(7, 1fr); }
   .cal-dow { @apply text-center text-[11px] text-sage pb-1.5 uppercase; }
   .cal-cell { @apply flex items-center justify-center rounded-[10px] text-[13.5px] cursor-pointer relative; aspect-ratio: 1; }
@@ -700,7 +700,7 @@
   .bill-to .bt-link { @apply mt-3 text-[13px] text-orange-deep cursor-pointer font-medium; }
   .token-banner { @apply bg-purple rounded-md flex items-center justify-between gap-3.5 mb-3.5; padding: 18px 20px; }
   .token-banner .tb-eyebrow { @apply text-[11px] text-lavender; } .token-banner .tb-amt { @apply font-display font-semibold text-[28px] text-orange; line-height: 1.1; } .token-banner .tb-sub { @apply text-[11.5px] mt-0.5; color: rgba(255,255,255,.7); }
-  .token-banner .tb-ic { @apply w-[42px] h-[42px] rounded-xl flex items-center justify-center flex-none; background: rgba(255,255,255,.12); } .token-banner .tb-ic svg { @apply w-5 h-5; stroke: theme('colors.orange.DEFAULT'); fill: none; stroke-width: 1.8; }
+  .token-banner .tb-ic { @apply w-[42px] h-[42px] flex items-center justify-center flex-none; border-radius: 12px; background: rgba(255,255,255,.12); } .token-banner .tb-ic svg { @apply w-5 h-5; stroke: theme('colors.orange.DEFAULT'); fill: none; stroke-width: 1.8; }
   .disc-row { @apply flex gap-2.5 text-[12.5px] text-ink-2 mb-[9px] leading-[1.5]; }
   .disc-row .dd { @apply w-1.5 h-1.5 rounded-full bg-orange flex-none; margin-top: 6px; }
   .amount-banner { @apply bg-purple rounded-lg text-center mb-[18px] p-[22px]; }
