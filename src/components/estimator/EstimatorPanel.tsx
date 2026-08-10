@@ -463,7 +463,7 @@ export default function EstimatorPanel({ variant = 'page' }: { variant?: 'drawer
 
       <div className="pb-[60px]">
         <p className="est-sec">Try it yourself</p>
-        <div className="ecard block p-[15px] px-4">
+        <div className=" block p-[15px] px-4">
           <p className="res">
             Explore a sample <a onClick={() => toast('Demo link — sample 360° model')}>360° virtual model</a>,{' '}
             <a onClick={() => toast('Demo link — sample DWG')}>2D drawings (DWG)</a> and{' '}
@@ -474,7 +474,7 @@ export default function EstimatorPanel({ variant = 'page' }: { variant?: 'drawer
         </div>
 
         <p className="est-sec">Terms &amp; conditions</p>
-        <div className="ecard block">
+        <div className=" block">
           {TERMS.map((t, i) => (
             <div key={t.h} className={`acc ${openTerms.has(i) ? 'open' : ''}`}>
               <div className="acc-h" onClick={() => toggle(openTerms, i, setOpenTerms)}>
