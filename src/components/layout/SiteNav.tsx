@@ -5,8 +5,8 @@ import { useApp } from '../../context/AppContext'
 
 const LINKS: { label: string; section: string }[] = [
   { label: 'What we do', section: 'services' },
-  { label: 'How it works', section: 'how' },
   { label: 'What we handle', section: 'types' },
+  { label: 'How it works', section: 'how' },
   { label: 'Pricing', section: 'pricing' },
   { label: 'Contact', section: 'contact' },
 ]
@@ -26,7 +26,7 @@ export default function SiteNav() {
     <>
       <nav className="fixed top-0 left-0 right-0 z-[200] h-nav-h bg-page/80 backdrop-blur-[14px] backdrop-saturate-[180%] border-b border-black/5">
         <div className="container-site h-full flex items-center justify-between gap-5">
-          <DbotLogo variant="nav" onClick={() => navigate('/')} />
+          <DbotLogo variant="nav" withAsbuilt onClick={() => navigate('/')} />
           <div className="hidden lg:flex items-center gap-1">
             {LINKS.map((l) => (
               <a

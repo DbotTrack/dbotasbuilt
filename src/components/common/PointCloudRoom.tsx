@@ -4,15 +4,6 @@ const SAGE = '#869897'
 const COLORS = ['#ff8f1f', '#4a304d', '#869897']
 const WEIGHTS = [0.5, 0.22, 0.28]
 
-/** Simple LCG so the hero looks lively but stays stable within a render. */
-function makeRng(seed: number) {
-  let s = seed
-  return () => {
-    s = (s * 9301 + 49297) % 233280
-    return s / 233280
-  }
-}
-
 type Pt = [number, number]
 
 interface Line {
@@ -31,11 +22,12 @@ interface Dot {
 
 /**
  * On-brand isometric wireframe "room" + point cloud, drawn in code.
- * Ported from the prototype's buildHeroViz(); seeded so it renders once.
+ * Ported from the prototype's buildHeroViz() — like the prototype, the scatter
+ * is drawn fresh on each load and then held for the life of the component.
  */
-export default function PointCloudRoom({ seed = 7 }: { seed?: number }) {
+export default function PointCloudRoom() {
   const { lines, floor, dots } = useMemo(() => {
-    const rng = makeRng(seed * 31 + 5)
+    const rng = Math.random
     const cx = 200,
       cy = 196,
       w = 96,
@@ -102,7 +94,7 @@ export default function PointCloudRoom({ seed = 7 }: { seed?: number }) {
     }
 
     return { lines, floor, dots }
-  }, [seed])
+  }, [])
 
   return (
     <svg viewBox="0 0 400 368" preserveAspectRatio="xMidYMid meet" aria-label="Point-cloud scan of a room" className="w-full h-full">
