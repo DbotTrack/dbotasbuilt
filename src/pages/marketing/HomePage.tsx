@@ -5,10 +5,19 @@ import DbotLogo from '../../components/common/DbotLogo'
 import { useApp } from '../../context/AppContext'
 import { useToast } from '../../context/ToastContext'
 
+const PAIN_POINTS = [
+  'A decades-old building with no drawings anywhere.',
+  'Plans that stopped matching reality three renovations ago.',
+  "A new apartment that doesn't match the drawings.",
+  "A heritage façade you can't afford to get wrong.",
+  'A factory floor packed wall-to-wall with equipment.',
+]
+
 const SERVICES = [
   {
     title: '360° walkthrough',
     blurb: 'Stand inside the space on your screen and measure as you go.',
+    alt: '360° walkthrough sample — placeholder',
     icon: (
       <svg viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" />
@@ -19,6 +28,7 @@ const SERVICES = [
   {
     title: '2D drawings (DWG)',
     blurb: 'Floor plans, ceiling plans and wall elevations, as-built.',
+    alt: '2D drawings sample — placeholder',
     icon: (
       <svg viewBox="0 0 24 24">
         <path d="M4 4h16v16H4z" />
@@ -29,6 +39,7 @@ const SERVICES = [
   {
     title: '3D model (SketchUp)',
     blurb: 'An editable model of the space exactly as it stands.',
+    alt: '3D model sample — placeholder',
     icon: (
       <svg viewBox="0 0 24 24">
         <path d="M12 2l9 5v10l-9 5-9-5V7z" />
@@ -39,6 +50,7 @@ const SERVICES = [
   {
     title: 'Point cloud',
     blurb: 'The raw, millimetre-accurate scan data to build from.',
+    alt: 'Point cloud sample — placeholder',
     icon: (
       <svg viewBox="0 0 24 24">
         <circle cx="6" cy="7" r="1" />
@@ -54,10 +66,18 @@ const SERVICES = [
   },
 ]
 
+const CATEGORIES = [
+  { title: 'Architecture & interior', blurb: 'Apartments, Villas, Offices, Showrooms, etc.', seed: 4 },
+  { title: 'Venue mapping', blurb: 'Ballrooms, Lawns, Destination venues, etc.', seed: 9 },
+  { title: 'Heritage documentation', blurb: 'Historic Buildings, Monuments, etc.', seed: 14 },
+  { title: 'Plant & machinery', blurb: 'Factories, utilities and equipment.', seed: 19 },
+  { title: 'Projection mapping', blurb: 'Accurate surfaces for projection art.', seed: 25 },
+]
+
 const PROCESS = [
   {
     n: 1,
-    title: 'Book & pay a token',
+    title: 'Pay a token & Book',
     blurb: 'Sign in, configure your scope, and pay a small token to lock a slot.',
     icon: (
       <svg viewBox="0 0 24 24">
@@ -69,7 +89,7 @@ const PROCESS = [
   {
     n: 2,
     title: 'We scan on-site',
-    blurb: 'Our team captures the whole space with LiDAR — usually in a day.',
+    blurb: 'Our team strategically captures the whole space with LiDAR.',
     icon: (
       <svg viewBox="0 0 24 24">
         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
@@ -80,7 +100,7 @@ const PROCESS = [
   {
     n: 3,
     title: 'We model it',
-    blurb: 'We turn the scan into your chosen deliverables, ready in 5–7 days.',
+    blurb: 'We turn the scanned data into your chosen deliverables.',
     icon: (
       <svg viewBox="0 0 24 24">
         <path d="M12 2l9 5v10l-9 5-9-5V7z" />
@@ -90,7 +110,7 @@ const PROCESS = [
   },
   {
     n: 4,
-    title: 'Preview & download',
+    title: 'Preview, Pay & Download',
     blurb: 'Approve the preview, pay the balance, and download your files.',
     icon: (
       <svg viewBox="0 0 24 24">
@@ -103,8 +123,8 @@ const PROCESS = [
 
 const WHY = [
   {
-    title: '±10mm accuracy',
-    blurb: 'Survey-grade LiDAR you can build on with confidence.',
+    title: 'Survey-grade, not guesswork',
+    blurb: 'Millimetre-accurate LiDAR you can build on with confidence.',
     icon: (
       <svg viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" />
@@ -114,17 +134,7 @@ const WHY = [
     ),
   },
   {
-    title: '5–7 day delivery',
-    blurb: 'Most projects scanned and modelled inside a week.',
-    icon: (
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3 2" />
-      </svg>
-    ),
-  },
-  {
-    title: 'One scan, every output',
+    title: 'One capture, every output',
     blurb: '360°, 2D, 3D and point cloud from a single visit.',
     icon: (
       <svg viewBox="0 0 24 24">
@@ -134,29 +144,55 @@ const WHY = [
     ),
   },
   {
-    title: '1,000+ projects',
-    blurb: 'A track record across homes, plants, heritage and venues.',
+    title: 'Billed to what we scan',
+    blurb: 'You pay for the area actually captured, adjusted to the final scope.',
     icon: (
       <svg viewBox="0 0 24 24">
-        <path d="M12 2l2.4 5 5.6.6-4.2 3.8 1.2 5.6L12 19.6 6.9 22.6l1.2-5.6L4 13.2l5.6-.6z" />
+        <path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Files that fit your workflow',
+    blurb: 'Ready to use workable 2D Drawings and 3D Models',
+    icon: (
+      <svg viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6M9 13h6M9 17h6" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Timelines & tracking',
+    blurb: 'Know your ETAs upfront and track projects seamlessly.',
+    icon: (
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
       </svg>
     ),
   },
 ]
 
-const CATEGORIES = [
-  { title: 'Architecture & interior', blurb: 'Homes, offices and fit-outs, as-built.', seed: 4 },
-  { title: 'Venue mapping', blurb: 'Event spaces, halls and showrooms.', seed: 9 },
-  { title: 'Heritage documentation', blurb: 'Old and irreplaceable buildings.', seed: 14 },
-  { title: 'Plant & machinery', blurb: 'Factories, utilities and equipment.', seed: 19 },
-  { title: 'Projection mapping', blurb: 'Accurate surfaces for projection art.', seed: 25 },
-]
-
 const PRICING_STEPS = [
-  { n: '1', title: '50% advance', blurb: 'Payable before scanning, via UPI or net banking.', bg: 'bg-orange' },
-  { n: '2', title: 'We scan & model', blurb: 'Captured and prepared in 5–7 days.', bg: 'bg-purple' },
-  { n: '3', title: 'Balance on delivery', blurb: 'Collected after delivery, adjusted to final area.', bg: 'bg-purple' },
-  { n: '₹', title: 'See your price', blurb: 'Instant indicative quote in under a minute.', bg: 'bg-orange' },
+  {
+    n: '1',
+    title: 'What you pay for',
+    blurb:
+      'Priced on area (sq ft) × your scope and chosen deliverables, plus an outstation allowance beyond Chennai. GST included.',
+  },
+  {
+    n: '2',
+    title: 'Token now, balance on delivery',
+    blurb:
+      'A small token locks your slot; the balance — adjusted to the area we actually scan — is due just before we hand over your files.',
+  },
+  {
+    n: '3',
+    title: 'Know the price upfront',
+    blurb: 'See an indicative price in seconds with the estimator; our team confirms the final quote.',
+  },
 ]
 
 export default function HomePage() {
@@ -172,12 +208,22 @@ export default function HomePage() {
         <div className="container-site">
           <div className="sec-head center">
             <span className="eyebrow">Who we are</span>
-            <h2>A Chennai company measuring the built world.</h2>
-            <p>
-              Dbot Asbuilt was founded to fix a stubborn problem — nobody really knows the exact dimensions of buildings
-              that already exist. We capture spaces with survey-grade LiDAR, down to the millimetre, so you can plan
-              with confidence instead of guesswork.
-            </p>
+            <h2>Measuring the built world.</h2>
+          </div>
+          <div className="about-split">
+            <ul className="about-list">
+              {PAIN_POINTS.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+            <div className="about-body">
+              <p>
+                We've walked into every one of them. So whatever state your space is in, you don't have to figure it out
+                alone — <strong>we've been there, and we've got you.</strong> Show us the site, and we'll hand back an
+                accurate digital replica in <strong>2D and 3D</strong> — precise enough to design, cost and build from
+                with total confidence.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -195,12 +241,49 @@ export default function HomePage() {
           </div>
           <div className="feature-grid">
             {SERVICES.map((f) => (
-              <div className="feature-card" key={f.title}>
-                <div className="fic">{f.icon}</div>
-                <h3>{f.title}</h3>
-                <p>{f.blurb}</p>
+              <div className="output-card" key={f.title}>
+                <div className="fc-shot" role="img" aria-label={f.alt}>
+                  {f.icon}
+                </div>
+                <div className="fc-body">
+                  <h3>{f.title}</h3>
+                  <p>{f.blurb}</p>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What we handle */}
+      <section className="section" id="sec-types">
+        <div className="container-site">
+          <div className="sec-head center">
+            <span className="eyebrow">What we handle</span>
+            <h2>From a flat to a factory</h2>
+            <p>Whatever the space, we capture it precisely.</p>
+          </div>
+          <div className="cat-grid">
+            {CATEGORIES.map((c) => (
+              <div className="cat-card" key={c.title} onClick={bookProject}>
+                <div className="cat-thumb">
+                  <VizThumb seed={c.seed} width={320} height={200} />
+                </div>
+                <div className="cat-body">
+                  <h3>{c.title}</h3>
+                  <p>{c.blurb}</p>
+                </div>
+                <div className="cat-hover">
+                  <span>Book your project →</span>
+                </div>
+              </div>
+            ))}
+            <div className="cat-card cat-cta" onClick={() => scrollToSection('contact')}>
+              <div className="cat-cta-inner">
+                <h3>Something else?</h3>
+                <p>Tell us about your space →</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -237,7 +320,7 @@ export default function HomePage() {
             <span className="eyebrow eyebrow-sage">Why Dbot</span>
             <h2>Why teams choose us</h2>
           </div>
-          <div className="feature-grid">
+          <div className="reason-grid">
             {WHY.map((f) => (
               <div className="feature-card" key={f.title}>
                 <div className="fic">{f.icon}</div>
@@ -246,43 +329,9 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <Stats />
         </div>
       </section>
-
-      {/* What we handle */}
-      <section className="section" id="sec-types">
-        <div className="container-site">
-          <div className="sec-head center">
-            <span className="eyebrow">What we handle</span>
-            <h2>From a flat to a factory</h2>
-            <p>Whatever the space, we capture it precisely. Hover a category to book it.</p>
-          </div>
-          <div className="cat-grid">
-            {CATEGORIES.map((c) => (
-              <div className="cat-card" key={c.title} onClick={bookProject}>
-                <div className="cat-thumb">
-                  <VizThumb seed={c.seed} width={320} height={200} />
-                </div>
-                <div className="cat-body">
-                  <h3>{c.title}</h3>
-                  <p>{c.blurb}</p>
-                </div>
-                <div className="cat-hover">
-                  <span>Book your project →</span>
-                </div>
-              </div>
-            ))}
-            <div className="cat-card cat-cta" onClick={() => scrollToSection('contact')}>
-              <div>
-                <h3>Something else?</h3>
-                <p>Tell us about your space →</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Stats />
 
       {/* Pricing */}
       <section className="section-tight" id="sec-pricing">
@@ -290,15 +339,12 @@ export default function HomePage() {
           <div className="sec-head center">
             <span className="eyebrow">Pricing</span>
             <h2>Transparent pricing, no surprises</h2>
-            <p>
-              Price is driven by area, project type, scope and deliverables. 50% advance to begin, balance after
-              delivery — adjusted to the final scanned area.
-            </p>
+            <p>Priced on what we actually scan — see it upfront, with no hidden extras.</p>
           </div>
           <div className="steps-grid">
             {PRICING_STEPS.map((s) => (
               <div className="step-card" key={s.title}>
-                <div className={`snum ${s.bg}`}>{s.n}</div>
+                <div className="snum">{s.n}</div>
                 <h3>{s.title}</h3>
                 <p>{s.blurb}</p>
               </div>
@@ -360,7 +406,7 @@ export default function HomePage() {
                 </svg>
                 <div>
                   <div className="l">Phone</div>
-                  <div className="v">+91 44 4000 1234</div>
+                  <div className="v">+91 93635 20220</div>
                 </div>
               </div>
               <div className="ci-row">
@@ -370,21 +416,7 @@ export default function HomePage() {
                 </svg>
                 <div>
                   <div className="l">Email</div>
-                  <div className="v">hello@dbot.co.in</div>
-                </div>
-              </div>
-              <div className="ci-row">
-                <svg viewBox="0 0 24 24">
-                  <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <div>
-                  <div className="l">Studio</div>
-                  <div className="v">
-                    No. 7, Greams Road, Thousand Lights,
-                    <br />
-                    Chennai 600006
-                  </div>
+                  <div className="v">service@dbot.co.in</div>
                 </div>
               </div>
               <div className="ci-row border-none">
@@ -399,24 +431,37 @@ export default function HomePage() {
               </div>
             </div>
             <div className="card p-6">
-              <div className="field">
-                <label>Your name</label>
-                <input className="input" placeholder="e.g. Aarav Sharma" />
-              </div>
-              <div className="field">
-                <label>Phone</label>
-                <input className="input" placeholder="+91" />
-              </div>
-              <div className="field">
-                <label>What do you need scanned?</label>
-                <textarea className="input" rows={4} placeholder="Tell us about the space, location and timeline." />
-              </div>
-              <button
-                className="btn btn-primary btn-block btn-lg"
-                onClick={() => toast("Thanks — this is a demo form. We'd be in touch within a few hours.")}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  toast('Thanks — this is a demo form. Our team will be in touch.')
+                }}
               >
-                Send enquiry
-              </button>
+                <div className="field">
+                  <label>Your name</label>
+                  <input className="input" placeholder="e.g. Aarav Sharma" required />
+                </div>
+                <div className="field">
+                  <label>Email</label>
+                  <input className="input" type="email" placeholder="you@studio.com" required />
+                </div>
+                <div className="field">
+                  <label>Phone</label>
+                  <input className="input" type="tel" placeholder="+91" required />
+                </div>
+                <div className="field">
+                  <label>What do you need scanned?</label>
+                  <textarea
+                    className="input"
+                    rows={4}
+                    placeholder="Tell us about the space, location and timeline."
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block btn-lg">
+                  Send enquiry
+                </button>
+              </form>
             </div>
           </div>
         </div>

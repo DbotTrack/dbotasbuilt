@@ -93,5 +93,11 @@ export default {
       },
     },
   },
+  // `shadow-purple` matches BOTH boxShadow.purple and colors.purple; the colour
+  // plugin runs last and would rewrite our 18%-opacity token as a fully opaque
+  // purple shadow. We never use shadow-<color>, so switch that plugin off.
+  corePlugins: {
+    boxShadowColor: false,
+  },
   plugins: [],
 }

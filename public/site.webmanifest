@@ -1,0 +1,14 @@
+{
+  "name": "Dbot Asbuilt",
+  "short_name": "Dbot",
+  "description": "Precise LiDAR scans of any space — 360° walkthroughs, 2D drawings and 3D models.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ebe9e5",
+  "theme_color": "#ebe9e5",
+  "icons": [
+    { "src": "/favicon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/favicon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/favicon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}

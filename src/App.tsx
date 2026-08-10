@@ -11,6 +11,7 @@ import HomePage from './pages/marketing/HomePage'
 import ServicesPage from './pages/marketing/ServicesPage'
 import WorkPage from './pages/marketing/WorkPage'
 import PricingPage from './pages/marketing/PricingPage'
+import EstimatorPage from './pages/marketing/EstimatorPage'
 import AboutPage from './pages/marketing/AboutPage'
 import ContactPage from './pages/marketing/ContactPage'
 
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/work" element={<WorkPage />} />
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/estimator" element={<EstimatorPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Route>
