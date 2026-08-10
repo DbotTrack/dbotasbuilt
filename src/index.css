@@ -496,7 +496,7 @@
   /* ---- estimator (scoped .est) ---- */
   .est-head h1 { @apply font-display font-semibold tracking-[-0.02em]; font-size: clamp(26px, 3.4vw, 36px); }
   .est-head p { @apply text-ink-2 mt-2 text-[15px]; }
-  .est { @apply grid gap-6 items-start; grid-template-columns: 1fr; }
+  .est { @apply grid gap-6 items-start; grid-template-columns: 1fr; padding: 14px 0 60px; }
   .est .glabel { @apply text-[13px] text-black font-semibold; margin: 22px 0 8px 3px; }
   .est .glabel:first-child { margin-top: 0; }
   .ecard { @apply bg-white border border-grey-1 rounded-md overflow-hidden; }
@@ -521,7 +521,7 @@
   .qtot { @apply text-[32px] font-semibold text-orange font-display; line-height: 1.05; }
   .qgst { @apply text-[12px] text-lavender mt-[3px]; }
   .qsep { @apply my-3.5; border-top: 1px solid rgba(255,255,255,.16); }
-  .qd { @apply mb-3; }
+  .qd { margin-bottom: 13px; }
   .qd-lab { @apply text-[11px] text-lavender mb-[5px]; letter-spacing: .2px; }
   .qd-val { @apply text-[12.5px] text-white leading-[1.5]; }
   .qsl { @apply flex justify-between text-[12px]; padding: 2.5px 0; }
@@ -541,7 +541,49 @@
   .acc.open .acc-b { @apply block; }
   .acc-b p { @apply text-[12.5px] mb-2 relative leading-[1.55]; color: #5a5a5e; padding-left: 15px; }
   .acc-b p::before { content: ''; @apply absolute w-1 h-1 rounded-full bg-grey-2; left: 2px; top: 7px; }
+  .fld-sm .mini { width: 78px; }
+  /** Section headings inside the estimator ("Try it yourself", "Terms & conditions"). */
+  .est-sec { @apply text-base font-semibold text-black; margin-left: 3px; }
   @media (min-width: 881px) { .est { grid-template-columns: minmax(0,1fr) 330px; } }
+  @media (max-width: 880px) { .est .qwrap { @apply static; } }
+
+  /* ---- estimator drawer ----
+     Wider than a standard drawer, and it keeps the two-column layout with the
+     quote card sticky in the right column. The drawer-body is the scroll
+     container, so the card pins near its top rather than under the nav. */
+  .est-drawer { width: min(960px, 96vw); }
+  .est-drawer .est { gap: 22px; padding: 0 0 20px; align-items: stretch; }
+  .est-drawer .est .qwrap { top: 4px; }
+  .est-drawer .est-head { padding: 0 0 4px; }
+  .est-drawer .est-head h1 { font-size: 22px; }
+  @media (max-width: 560px) { .est-drawer { width: 100vw; max-width: 100vw; } }
+
+  /* ---- estimator: narrow phones ----
+     Fixed-width number fields (130px / 78px) overflow a 320px card, so let the
+     area fields fill the row and pair Floors/Sides two-up. */
+  @media (max-width: 460px) {
+    .est .awrap { gap: 12px; }
+    .est .fld { flex: 1 1 100%; min-width: 0; }
+    .est .fld .mini { width: 100%; }
+    .est .fld-sm { flex: 1 1 calc(50% - 6px); }
+    .est .elev { flex: 1 1 100%; align-self: flex-start; padding-bottom: 0; }
+    .est .rsub { max-width: none; }
+    .qtot { font-size: 27px; }
+    .q { padding: 16px; }
+  }
+
+  /* ---- estimator: running total pinned on phones (page variant only) ---- */
+  .est-mobile-total {
+    @apply fixed left-0 right-0 bottom-0 z-[150] flex items-center justify-between gap-3
+           bg-purple/95 px-5 py-3 backdrop-blur-[10px];
+    box-shadow: 0 -6px 24px rgba(26, 23, 24, 0.18);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  .est-mobile-total .emt-lab { @apply text-[10.5px] text-lavender uppercase; letter-spacing: 0.06em; }
+  .est-mobile-total .emt-val { @apply text-[20px] font-semibold text-orange font-display leading-tight; }
+  @media (min-width: 881px) { .est-mobile-total { display: none; } }
+  /* clear the pinned bar so the last terms row stays reachable */
+  @media (max-width: 880px) { .est-page { padding-bottom: 76px; } }
 
   /* ---- booking wizard ---- */
   .bk-prog { @apply flex items-center gap-1.5 flex-none; padding: 14px 24px 4px; }
@@ -642,3 +684,4 @@
   .summary-strip .ss-item { @apply flex-1 text-center p-3.5; } .summary-strip .ss-item + .ss-item { @apply border-l border-line; }
   .summary-strip .ssl { @apply text-[11px] text-sage; } .summary-strip .ssv { @apply font-semibold text-[15px] mt-[3px]; }
 }
+

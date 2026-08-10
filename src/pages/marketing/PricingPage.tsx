@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
 
 export default function PricingPage() {
@@ -17,6 +18,9 @@ export default function PricingPage() {
           <button className="btn btn-primary btn-lg" onClick={openEstimator}>
             Open the estimator
           </button>
+          <Link className="btn btn-ghost btn-lg" to="/estimator">
+            Full-page estimator
+          </Link>
         </div>
       </div>
 
