@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { CLIENT_APP_URL, CLIENT_BOOK_URL } from '../lib/clientApp'
 import type { AuthMode, OverlayKind } from '../types'
 import { useToast } from './ToastContext'
 
@@ -30,7 +31,7 @@ interface AppValue {
   closeOverlays: () => void
   setAuthMode: (mode: AuthMode) => void
 
-  /** primary CTA — books if signed in, else gates behind auth */
+  /** primary CTA — hands off to the client app's estimator (see lib/clientApp) */
   bookProject: () => void
   logIn: () => void
   completeSignin: () => void
@@ -69,14 +70,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setOverlay('auth')
   }, [])
 
+  // The app decides signed-in vs signed-out from its own storage, which this
+  // origin cannot see — so always go through its sign-in gate, in a new tab.
   const bookProject = useCallback(() => {
-    if (signedIn) openBooking()
-    else openAuth('login', { pendingBooking: true })
-  }, [signedIn, openBooking, openAuth])
+    window.open(CLIENT_BOOK_URL, '_blank', 'noopener,noreferrer')
+  }, [])
 
   // Log in lives in the separate client app — open it in a new tab.
   const logIn = useCallback(() => {
-    window.open('https://app.dbotasbuilt.com', '_blank', 'noopener,noreferrer')
+    window.open(CLIENT_APP_URL, '_blank', 'noopener,noreferrer')
   }, [])
 
   const completeSignin = useCallback(() => {

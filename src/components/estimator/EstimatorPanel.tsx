@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
-import { useApp } from '../../context/AppContext'
 import { useToast } from '../../context/ToastContext'
+import { CLIENT_BOOK_URL, bookUrlWith } from '../../lib/clientApp'
 import {
   CITIES,
   DELIVERABLES,
@@ -12,6 +12,7 @@ import {
   quote,
   type DeliverableId,
   type ProjectTypeId,
+  type QuoteInput,
   type ScopeId,
 } from '../../lib/pricing'
 
@@ -102,7 +103,6 @@ const num = (s: string) => {
 }
 
 export default function EstimatorPanel({ variant = 'page' }: { variant?: 'drawer' | 'page' }) {
-  const { bookProject } = useApp()
   const { toast } = useToast()
   const quoteRef = useRef<HTMLDivElement>(null)
 
@@ -124,24 +124,24 @@ export default function EstimatorPanel({ variant = 'page' }: { variant?: 'drawer
   )
   const [openTerms, setOpenTerms] = useState<Set<number>>(new Set([0]))
 
-  const q = useMemo(
-    () =>
-      quote({
-        projectType,
-        city,
-        interior: { on: intOn, area: num(intArea) },
-        open: { on: openOn, area: num(openArea) },
-        elevation: {
-          on: elevOn,
-          building: num(bld),
-          floors: num(floors),
-          sides: num(sides),
-        },
-        scope,
-        deliverables: deliv,
-      }),
+  const input = useMemo<QuoteInput>(
+    () => ({
+      projectType,
+      city,
+      interior: { on: intOn, area: num(intArea) },
+      open: { on: openOn, area: num(openArea) },
+      elevation: {
+        on: elevOn,
+        building: num(bld),
+        floors: num(floors),
+        sides: num(sides),
+      },
+      scope,
+      deliverables: deliv,
+    }),
     [projectType, city, intOn, intArea, openOn, openArea, elevOn, bld, floors, sides, scope, deliv],
   )
+  const q = useMemo(() => quote(input), [input])
 
   function toggle<T>(set: Set<T>, key: T, setter: (s: Set<T>) => void) {
     const next = new Set(set)
@@ -150,26 +150,25 @@ export default function EstimatorPanel({ variant = 'page' }: { variant?: 'drawer
     setter(next)
   }
 
-  /** Hand the configured scope to the booking flow, like the prototype did. */
+  /**
+   * Hand the configured scope to the client app, sealed into the link — its
+   * localStorage is another origin's, so a value stored here never reaches it.
+   *
+   * The new tab is opened BEFORE the sealing, which is async: by the time it
+   * resolves the click no longer counts as a user gesture and popup blockers
+   * (Safari's especially) would stop a `window.open`. The tab is given the URL
+   * once it is ready, and its `opener` is cut first, as `noopener` would.
+   */
   function book() {
-    try {
-      localStorage.setItem(
-        'dbot_estimate',
-        JSON.stringify({
-          type: q.typeLabel,
-          city,
-          area: q.totalArea,
-          scope: q.scopeLabels,
-          deliverables: q.deliverableLabels,
-          base: q.base,
-          allowance: q.allowanceOnRequest ? 'on-request' : q.allowance,
-          total: q.total,
-        }),
-      )
-    } catch {
-      /* storage blocked (private mode) — booking still proceeds */
-    }
-    bookProject()
+    const tab = window.open('', '_blank')
+    if (tab) tab.opener = null
+    bookUrlWith(input)
+      // no WebCrypto (a plain-http preview) — still book, just without the scope
+      .catch(() => CLIENT_BOOK_URL)
+      .then((url) => {
+        if (tab) tab.location.href = url
+        else window.location.assign(url) // popup blocked — same tab instead
+      })
   }
 
   const isDrawer = variant === 'drawer'
