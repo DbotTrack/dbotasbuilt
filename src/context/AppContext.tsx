@@ -8,34 +8,22 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CLIENT_APP_URL, CLIENT_BOOK_URL } from '../lib/clientApp'
-import type { AuthMode, OverlayKind } from '../types'
-import { useToast } from './ToastContext'
+import type { OverlayKind } from '../types'
 
 /**
  * Central app state — the React equivalent of the prototype's global JS:
- * sign-in state, which overlay (estimator / booking / auth) is open, and the
- * cross-cutting actions (bookProject, logIn, signOut, scrollToSection).
+ * which overlay is open, and the cross-cutting actions (bookProject, logIn,
+ * scrollToSection). Sign-in, booking and the portal live in the client app.
  */
 interface AppValue {
-  signedIn: boolean
-  setSignedIn: (v: boolean) => void
-
   overlay: OverlayKind
-  authMode: AuthMode
-  /** true when the auth modal was opened as a gate before booking */
-  pendingBooking: boolean
 
   openEstimator: () => void
-  openBooking: () => void
-  openAuth: (mode: AuthMode, opts?: { pendingBooking?: boolean }) => void
   closeOverlays: () => void
-  setAuthMode: (mode: AuthMode) => void
 
   /** primary CTA — hands off to the client app's estimator (see lib/clientApp) */
   bookProject: () => void
   logIn: () => void
-  completeSignin: () => void
-  signOut: () => void
   /** jump to the marketing home and scroll to a section id ("services", ...) */
   scrollToSection: (id: string) => void
 }
@@ -44,12 +32,8 @@ const AppContext = createContext<AppValue | null>(null)
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate()
-  const { toast } = useToast()
 
-  const [signedIn, setSignedIn] = useState(false)
   const [overlay, setOverlay] = useState<OverlayKind>(null)
-  const [authMode, setAuthMode] = useState<AuthMode>('login')
-  const [pendingBooking, setPendingBooking] = useState(false)
 
   // lock body scroll whenever an overlay is open
   useEffect(() => {
@@ -62,13 +46,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const closeOverlays = useCallback(() => setOverlay(null), [])
 
   const openEstimator = useCallback(() => setOverlay('estimator'), [])
-  const openBooking = useCallback(() => setOverlay('booking'), [])
-
-  const openAuth = useCallback<AppValue['openAuth']>((mode, opts) => {
-    setPendingBooking(!!opts?.pendingBooking)
-    setAuthMode(mode)
-    setOverlay('auth')
-  }, [])
 
   // The app decides signed-in vs signed-out from its own storage, which this
   // origin cannot see — so always go through its sign-in gate, in a new tab.
@@ -80,23 +57,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const logIn = useCallback(() => {
     window.open(CLIENT_APP_URL, '_blank', 'noopener,noreferrer')
   }, [])
-
-  const completeSignin = useCallback(() => {
-    setSignedIn(true)
-    const pend = pendingBooking
-    setPendingBooking(false)
-    navigate('/portal')
-    if (pend) setOverlay('booking')
-    else setOverlay(null)
-  }, [pendingBooking, navigate])
-
-  const signOut = useCallback(() => {
-    setSignedIn(false)
-    setPendingBooking(false)
-    setOverlay(null)
-    navigate('/')
-    toast('Signed out')
-  }, [navigate, toast])
 
   const scrollToSection = useCallback(
     (id: string) => {
@@ -120,20 +80,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const value: AppValue = {
-    signedIn,
-    setSignedIn,
     overlay,
-    authMode,
-    pendingBooking,
     openEstimator,
-    openBooking,
-    openAuth,
     closeOverlays,
-    setAuthMode,
     bookProject,
     logIn,
-    completeSignin,
-    signOut,
     scrollToSection,
   }
 

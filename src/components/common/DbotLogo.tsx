@@ -1,6 +1,6 @@
 interface DbotLogoProps {
   /** size variant maps to the .dbot-logo--* classes */
-  variant?: 'nav' | 'footer' | 'sidebar' | 'profile-setup'
+  variant?: 'nav' | 'footer' | 'profile-setup'
   /** hide the "bot" wordmark (icon only) */
   iconOnly?: boolean
   /** append the orange "asbuilt" wordmark — the full marketing-nav lockup */

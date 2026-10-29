@@ -2,7 +2,7 @@ import PointCloudRoom from '../../../components/common/PointCloudRoom'
 import { useApp } from '../../../context/AppContext'
 
 export default function Hero() {
-  const { bookProject, openEstimator, logIn, scrollToSection, signedIn } = useApp()
+  const { bookProject, openEstimator, logIn, scrollToSection } = useApp()
   return (
     <section className="pt-16 pb-14 max-[600px]:py-10" id="sec-top">
       <div className="container-site grid grid-cols-1 min-[601px]:grid-cols-[1.05fr_0.95fr] gap-9 min-[601px]:gap-12 items-center">
@@ -31,15 +31,11 @@ export default function Hero() {
             </button>
           </div>
           <div className="mt-[18px] text-[14px] text-ink-3">
-            {!signedIn && (
-              <>
-                Already a client?{' '}
-                <a onClick={logIn} className="text-orange-deep cursor-pointer font-medium">
-                  Log in
-                </a>{' '}
-                ·{' '}
-              </>
-            )}
+            Already a client?{' '}
+            <a onClick={logIn} className="text-orange-deep cursor-pointer font-medium">
+              Log in
+            </a>{' '}
+            ·{' '}
             <a onClick={() => scrollToSection('contact')} className="text-orange-deep cursor-pointer font-medium">
               Talk to us
             </a>

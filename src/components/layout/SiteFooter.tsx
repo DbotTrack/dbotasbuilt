@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import DbotLogo from '../common/DbotLogo'
 import { useApp } from '../../context/AppContext'
-import { useToast } from '../../context/ToastContext'
 
 /** Shared dark marketing footer. */
 export default function SiteFooter() {
   const navigate = useNavigate()
   const { scrollToSection, bookProject, openEstimator, logIn } = useApp()
-  const { toast } = useToast()
 
   const link =
     'block text-[13.5px] text-ink/[0.85] mb-2.5 cursor-pointer transition-colors hover:text-ink hover:underline leading-[1.5]'
@@ -45,16 +43,6 @@ export default function SiteFooter() {
       </div>
       <div className="container-site border-t border-ink/[0.22] py-[18px] pb-[22px] flex items-center justify-between gap-3.5 flex-wrap text-[12.5px]">
         <span>© 2026 Dbot Asbuilt.</span>
-        <span
-          className="text-ink/[0.74] cursor-pointer inline-flex items-center gap-1.5 hover:text-ink hover:underline"
-          onClick={() => toast('“Admin portal” comes in a later build step')}
-        >
-          <svg viewBox="0 0 24 24" className="w-[13px] h-[13px]" stroke="currentColor" fill="none" strokeWidth={2}>
-            <rect x="5" y="11" width="14" height="9" rx="2" />
-            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-          </svg>{' '}
-          Admin login
-        </span>
       </div>
     </footer>
   )
